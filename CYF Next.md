@@ -61,7 +61,7 @@ A **Volunteer** can have multiple **Role** and each **Role** can have a **Cohort
 
 A **Volunteer** can have a relationship of **Buddy** (can be Tech, PD or welfare) with specific **Student** (used in query permissions)
 
-## Tables
+## E-R
 
 ### Student E-R
 
@@ -83,8 +83,25 @@ erDiagram %% Student
    COURSE_WORK o|--o{ COMMENT: has
    STUDENT ||--0{ BUDDY: has
 ```
+### Volunteer E-R
 
-#### Person
+```mermaid
+erDiagram %% Volunteer
+   PERSON ||--o| VOLUNTEER : is_a
+   ROLE o|--o{ VOLUNTEER_ROLE_COHORT: is_materialized
+   VOLUNTEER o|--o{ VOLUNTEER_ROLE_COHORT: have
+   VOLUNTEER_ROLE_COHORT }o--o| COHORT: associated
+   VOLUNTEER |o--o{ MESSAGE: sent
+   VOLUNTEER |o--o{ COURSE_WORK: reviews
+   VOLUNTEER |o--o{ FEEDBACK: gives
+   VOLUNTEER |o--o{ COMMENT: gives
+   COURSE_WORK o|--o{ COMMENT: has
+   VOLUNTEER ||--o{ BUDDY: is
+```
+
+## Tables
+
+### Person
 
 Contains the basic data of a person
 | Field | Description | Type | Notes |
@@ -102,29 +119,29 @@ Contains the basic data of a person
 | UpdatedAt | | DateTime | |
 | UpdatedBy | Id | Int | FK to last userId that created/updated data|
 
-#### Student
+### Student
 
 Contains the data of a student
 | Field | Description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | StudentId | Id | Int | PK |
 | PersonId | Id | Int | FK |
-| CountryISO | | String | Iso code of the origin country |
-| Experience | Id | Int | FK to Experience list of values |
+| CountryISO | | String | FK, Iso code of the origin country |
+| ExperienceId | Id | Int | FK  |
 | itAccess | | Boolean | |
-| heardAbout | Id | Int | FK to Heard list of values |
+| heardAboutId | Id | Int | FK |
 | isEighteen | | Boolean | |
-| gender | Id | Int | FK to Gender list of values |
+| genderId | Id | Int | FK |
 | disadvantagedBackground | | Boolean | |
 | disadvantagedBackgroundText | | String | |
-| currentlyEmployed | Id | Int | FK to CurrentlyEmployed list of values |
-| studying | Id | Int | FK to CurrentlyStudying list of values |
+| currentlyEmployedId | Id | Int | FK |
+| studyingId | Id | Int | FK |
 | isAsylumSeekerOrRefugee | | Boolean | |
 | CreatedAt | | DateTime | |
 | UpdatedAt | | DateTime | |
 | UpdatedBy | Id | Int | FK to last userId that created/updated data|
 
-#### Region
+### Region
 
 Contains the regions (city) 
 | Field | Description | Type | Notes |
@@ -132,7 +149,7 @@ Contains the regions (city)
 | RegionId | Id | Int | PK |
 | Description | | String | |
 
-#### Cohort
+### Cohort
 
 Contains the Cohorts
 | Field | Description | Type | Notes |
@@ -143,7 +160,7 @@ Contains the Cohorts
 | StartDate | | Date | |
 | EndDate | | Date | |
 
-#### Student_Cohort
+### Student_Cohort
 
 Keeps the students that work in a cohort and to which cohort the student belong or had belonged
 | Field | Description | Type | Notes |
@@ -152,7 +169,7 @@ Keeps the students that work in a cohort and to which cohort the student belong 
 | StudentId | Id | Int | PK |
 | isActive | | Boolean | |
 
-#### Stage
+### Stage
 
 Different stages in the lifecycle of the student
 | Field | Description | Type | Notes |
@@ -160,7 +177,7 @@ Different stages in the lifecycle of the student
 | StageId | Id | Int | PK |
 | Description |  | String | |
 
-#### Step
+### Step
 
 Steps that compose a stage
 | Field | Description | Type | Notes |
@@ -169,7 +186,7 @@ Steps that compose a stage
 | StageId | Id | Int | FK |
 | Description |  | String | |
 
-#### Student_Step
+### Student_Step
 
 Steps that are done by the student
 | Field | Description | Type | Notes |
@@ -178,7 +195,8 @@ Steps that are done by the student
 | StepId | Id | Int | PK, FK |
 | CohortId | Id | Int | PK, FK |
 | isActive |  | Boolean |  |
-#### Message
+
+### Message
 
 Message sent from volunteer to student
 | Field | Description | Type | Notes |
@@ -188,7 +206,7 @@ Message sent from volunteer to student
 | VolunteerId | Id | Int | FK |
 | Description |  | String | |
 
-#### Feedback
+### Feedback
 
 Feedback sent from volunteer to student
 | Field | Description | Type | Notes |
@@ -198,7 +216,7 @@ Feedback sent from volunteer to student
 | VolunteerId | Id | Int | FK |
 | Description |  | String | |
 
-#### Course_Work
+### Course_Work
 
 Course work done by the student
 | Field | Description | Type | Notes |
@@ -207,12 +225,12 @@ Course work done by the student
 | StudentId | Id | Int | FK |
 | StepId | Id | Int | FK |
 | CohortId | Id | Int | FK |
-| Status | Id | Int | FK to CourseWorkStatus list of values |
+| CourseWorkStatusId | Id | Int | FK |
 | CreatedAt | | DateTime | |
 | UpdatedAt | | DateTime | |
 | UpdatedBy | Id | Int | FK to last userId that created/updated data|
 
-#### Comment
+### Comment
 
 Comments give to the course_work, can be done by the student or the volunteer
 | Field | Description | Type | Notes |
@@ -221,42 +239,135 @@ Comments give to the course_work, can be done by the student or the volunteer
 | PersonId | Id | Int | FK |
 | Description | | String |  |
 
-#### Buddy
+### Buddy
 
 Relationship of Tech, PD or welfare between volunteer and student
 | Field | Description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | StudentId | Id | Int | PK, FK |
 | VolunteerId | Id | Int | PK, FK |
-| TypeId | Id | Int | FK to TypeOfBuddies list of values |
-
-#### ListOfValues
-
-Contains basic key-description pairs
-| Field | Description | Type | Notes |
-| ------- | -------------- | ------ | --- |
-| ListId | Id | String | PK |
-| ValueId | Id | Int | PK |
-| Description | | String | |
-
-
+| TypeBuddyId | Id | Int | FK |
 
 ### VOLUNTEER
 
-```mermaid
-erDiagram %% Volunteer
-   PERSON ||--o| VOLUNTEER : is_a
-   ROLE o|--o{ VOLUNTEER_ROLE_COHORT: is_materialized
-   VOLUNTEER o|--o{ VOLUNTEER_ROLE_COHORT: have
-   VOLUNTEER_ROLE_COHORT }o--o| COHORT: associated
-   VOLUNTEER |o--o{ MESSAGE: sent
-   VOLUNTEER |o--o{ COURSE_WORK: reviews
-   VOLUNTEER |o--o{ FEEDBACK: gives
-   VOLUNTEER |o--o{ COMMENT: gives
-   COURSE_WORK o|--o{ COMMENT: has
-   VOLUNTEER ||--o{ BUDDY: is
-```
+Contains the data of a volunteer
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| VolunteerId | Id | Int | PK |
+| PersonId | Id | Int | FK |
+| OtherExpertise | | String |  |
+| CurrentlyVolunteering | | Boolean |  |
+| AvailableOnWeekends | | Boolean |  |
+| CreatedAt | | DateTime | |
+| UpdatedAt | | DateTime | |
+| UpdatedBy | Id | Int | FK to last userId that created/updated data|
 
+### VOLUNTEER_ROLE_COHORT
+
+Contains a list the role of the volunteer
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| VolunteerId | Id | Int | PK, FK |
+| Cohort | Id | Int | PK, FK |
+| RoleId | Id | Int | PK, FK |
+| isActive |  | Boolean | |
+
+### VOLUNTEER_EXPERTISE
+
+Contains a list of expertise for a volunteer
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| VolunteerId | Id | Int | PK |
+| ExpertiseId | Id | Int | PK, FK |
+| Level |  | Int | |
+
+### VOLUNTEER_SKILLSET
+
+Contains a list of expertise for a volunteer
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| VolunteerId | Id | Int | PK |
+| SkillId | Id | Int | PK, FK |
+
+### Country
+
+Contains list of countries
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| CountryISO | Id | String | PK |
+| Description | | String | |
+
+### Experience
+
+Contains experience descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| ExperienceId | Id | Int | PK |
+| Description | | String | |
+
+### HEARD_ABOUT
+
+Contains heard About descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| HeardAboutId | Id | Int | PK |
+| Description | | String | |
+
+### GENDER
+
+Contains Gender descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| GenderId | Id | Int | PK |
+| Description | | String | |
+
+### CURRENTLY_EMPLOYED
+
+Contains Currently Employed descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| CurrentlyEmployedId | Id | Int | PK |
+| Description | | String | |
+
+### STUDYING
+
+Contains Studying descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| StudyingId | Id | Int | PK |
+| Description | | String | |
+
+### COURSE_WORK_STATUS
+
+Contains Course Work Status descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| CourseWorkStatusId | Id | Int | PK |
+| Description | | String | |
+
+### BUDDIES_TYPE
+
+Contains Type Of Buddy descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| TypeBuddyId | Id | Int | PK |
+| Description | | String | |
+
+### EXPERTISE
+
+Contains Expertise descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| ExpertiseId | Id | Int | PK |
+| Description | | String | |
+
+### SKILLSET
+
+Contains Skill set descriptions
+| Field | Description | Type | Notes |
+| ------- | -------------- | ------ | --- |
+| SkillSetId | Id | Int | PK |
+| Description | | String | |
 ### Permissions
 
 #### User
@@ -322,8 +433,7 @@ Fields accessible by the permission
 
 ## Next steps
 
-- Write tables with field
 - Create db
-- Make small import
+- Create small dataset
 - begin with Hasura
 - Create POC
