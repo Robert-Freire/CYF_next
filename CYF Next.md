@@ -104,336 +104,334 @@ erDiagram %% Volunteer
 ### Person
 
 Contains the basic data of a person
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| PersonId | Id | Int | PK |
-| UserId | Id | Int | FK |
+| person_id | Id | Int | PK |
+| user_id | Id | Int | FK |
 | firstName | | String | |
 | lastName | | String | |
 | email | | String | |
 | telephone | | String | |
 | agreeToTou | | Boolean | |
 | agreeToReceiveCommunication | | Boolean | |
-| RegionId | Id | Int | FK |
-| CreatedAt | | DateTime | |
-| UpdatedAt | | DateTime | |
-| UpdatedBy | Id | Int | FK to last userId that created/updated data|
+| region_id | Id | Int | FK |
+| created_at | | DateTime | |
+| updated_at | | DateTime | |
+| updated_by | Id | Int | FK to last user_id that created/updated data|
 
 ### Student
 
 Contains the data of a student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| StudentId | Id | Int | PK |
-| PersonId | Id | Int | FK |
-| CountryISO | | String | FK, Iso code of the origin country |
-| ExperienceId | Id | Int | FK  |
+| student_id | Id | Int | PK |
+| person_id | Id | Int | FK |
+| CountryISO | | String | FK, Iso code of the origin country | Out of POC
+| ExperienceId | Id | Int | FK  | Out of POC
 | itAccess | | Boolean | |
-| heardAboutId | Id | Int | FK |
+| heardAboutId | Id | Int | FK | Out of POC
 | isEighteen | | Boolean | |
-| genderId | Id | Int | FK |
+| genderId | Id | Int | FK | Out of POC
 | disadvantagedBackground | | Boolean | |
 | disadvantagedBackgroundText | | String | |
-| currentlyEmployedId | Id | Int | FK |
-| studyingId | Id | Int | FK |
-| isAsylumSeekerOrRefugee | | Boolean | |
-| CreatedAt | | DateTime | |
-| UpdatedAt | | DateTime | |
-| UpdatedBy | Id | Int | FK to last userId that created/updated data|
+| currentlyEmployedId | Id | Int | FK | Out of POC
+| studyingId | Id | Int | FK | Out of POC
+| isAsylumSeekerOrRefugee | | Boolean | |  Change to table. Out of POC
+| created_at | | DateTime | |
+| updated_at | | DateTime | |
+| updated_by | Id | Int | FK to last user_id that created/updated data|
 
 ### Region
 
 Contains the regions (city) 
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| RegionId | Id | Int | PK |
-| Description | | String | |
+| region_id | Id | Int | PK |
+| description | | String | |
 
 ### Cohort
 
 Contains the Cohorts
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| CohortId | Id | Int | PK |
-| RegionId | Id | Int | FK |
-| Description | | String | |
-| StartDate | | Date | |
-| EndDate | | Date | |
+| cohort_id | Id | Int | PK |
+| region_id | Id | Int | FK |
+| description | | String | |
+| start_date | | Date | |
+| end_date | | Date | |
 
 ### Student_Cohort
 
 Keeps the students that work in a cohort and to which cohort the student belong or had belonged
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| CohortId | Id | Int | PK |
-| StudentId | Id | Int | PK |
-| isActive | | Boolean | |
+| cohort_id | Id | Int | PK |
+| student_id | Id | Int | PK |
+| is_active | | Boolean | |
 
 ### Stage
-
+-- Out of POC
 Different stages in the lifecycle of the student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | StageId | Id | Int | PK |
-| Description |  | String | |
+| description |  | String | |
 
 ### Step
-
+-- Out of POC
 Steps that compose a stage
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | StepId | Id | Int | PK |
 | StageId | Id | Int | FK |
-| Description |  | String | |
+| description |  | String | |
 
 ### Student_Step
-
+-- Out of POC
 Steps that are done by the student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| StudentId | Id | Int | PK,FK |
+| student_id | Id | Int | PK,FK |
 | StepId | Id | Int | PK, FK |
-| CohortId | Id | Int | PK, FK |
-| isActive |  | Boolean |  |
+| cohort_id | Id | Int | PK, FK |
+| is_active |  | Boolean |  |
 
 ### Message
-
+-- Out of POC
 Message sent from volunteer to student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | MessageId | Id | Int | PK |
-| StudentId | Id | Int | FK |
-| VolunteerId | Id | Int | FK |
-| Description |  | String | |
+| student_id | Id | Int | FK |
+| volunteer_id | Id | Int | FK |
+| description |  | String | |
 
 ### Feedback
-
+-- Out of POC
 Feedback sent from volunteer to student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | FeedbackId | Id | Int | PK |
-| StudentId | Id | Int | FK |
-| VolunteerId | Id | Int | FK |
-| Description |  | String | |
+| student_id | Id | Int | FK |
+| volunteer_id | Id | Int | FK |
+| description |  | String | |
 
 ### Course_Work
-
+-- Out of POC
 Course work done by the student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | CourseWorkId | Id | Int | PK |
-| StudentId | Id | Int | FK |
+| student_id | Id | Int | FK |
 | StepId | Id | Int | FK |
-| CohortId | Id | Int | FK |
+| cohort_id | Id | Int | FK |
 | CourseWorkStatusId | Id | Int | FK |
-| CreatedAt | | DateTime | |
-| UpdatedAt | | DateTime | |
-| UpdatedBy | Id | Int | FK to last userId that created/updated data|
+| created_at | | DateTime | |
+| updated_at | | DateTime | |
+| updated_by | Id | Int | FK to last user_id that created/updated data|
 
 ### Comment
-
+-- Out of POC
 Comments give to the course_work, can be done by the student or the volunteer
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | CourseWorkId | Id | Int | PK |
-| PersonId | Id | Int | FK |
-| Description | | String |  |
+| person_id | Id | Int | FK |
+| description | | String |  |
 
 ### Buddy
 
 Relationship of Tech, PD or welfare between volunteer and student
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| StudentId | Id | Int | PK, FK |
-| VolunteerId | Id | Int | PK, FK |
-| TypeBuddyId | Id | Int | FK |
+| student_id | Id | Int | PK, FK |
+| volunteer_id | Id | Int | PK, FK |
+| buddy_type_id | Id | Int | FK |
 
-### VOLUNTEER
+### Volunteer
 
 Contains the data of a volunteer
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| VolunteerId | Id | Int | PK |
-| PersonId | Id | Int | FK |
-| OtherExpertise | | String |  |
-| CurrentlyVolunteering | | Boolean |  |
-| AvailableOnWeekends | | Boolean |  |
-| CreatedAt | | DateTime | |
-| UpdatedAt | | DateTime | |
-| UpdatedBy | Id | Int | FK to last userId that created/updated data|
+| volunteer_id | Id | Int | PK |
+| person_id | Id | Int | FK |
+| other_expertise | | String |  |
+| is_currently_volunteering | | Boolean |  |
+| is_available_on_weekends | | Boolean |  |
+| created_at | | DateTime | |
+| updated_at | | DateTime | |
+| updated_by | Id | Int | FK to last user_id that created/updated data|
 
-### VOLUNTEER_ROLE_COHORT
+### Volunteer_Role_Cohort
 
 Contains a list the role of the volunteer
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| VolunteerId | Id | Int | PK, FK |
-| Cohort | Id | Int | PK, FK |
-| RoleId | Id | Int | PK, FK |
-| isActive |  | Boolean | |
+| volunteer_id | Id | Int | PK, FK |
+| Cohort_id | Id | Int | PK, FK |
+| role_id | Id | Int | PK, FK |
+| is_active |  | Boolean | |
 
-### VOLUNTEER_EXPERTISE
-
+### Volunteer_Expertise
+-- Out of POC
 Contains a list of expertise for a volunteer
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| VolunteerId | Id | Int | PK |
+| volunteer_id | Id | Int | PK |
 | ExpertiseId | Id | Int | PK, FK |
 | Level |  | Int | |
 
-### VOLUNTEER_SKILLSET
-
+### Volunteer_Skillset
+-- Out of POC
 Contains a list of expertise for a volunteer
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| VolunteerId | Id | Int | PK |
+| volunteer_id | Id | Int | PK |
 | SkillId | Id | Int | PK, FK |
 
 ### Country
-
+-- Out of POC
 Contains list of countries
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | CountryISO | Id | String | PK |
-| Description | | String | |
+| description | | String | |
 
 ### Experience
 
 Contains experience descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | ExperienceId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### HEARD_ABOUT
-
+### Heard_About
+-- Out of POC
 Contains heard About descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | HeardAboutId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### GENDER
-
+### Gender
+-- Out of POC
 Contains Gender descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | GenderId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### CURRENTLY_EMPLOYED
-
+### Currently_Employed
+-- Out of POC
 Contains Currently Employed descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | CurrentlyEmployedId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### STUDYING
-
+### Studying
+-- Out of POC
 Contains Studying descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | StudyingId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### COURSE_WORK_STATUS
-
+### Course_Work_Status
+-- Out of POC
 Contains Course Work Status descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | CourseWorkStatusId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### BUDDIES_TYPE
+### Buddies_Type
 
 Contains Type Of Buddy descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
-| TypeBuddyId | Id | Int | PK |
-| Description | | String | |
+| buddy_type_id | Id | Int | PK |
+| description | | String | |
 
-### EXPERTISE
-
+### Expertise
+-- Out of POC
 Contains Expertise descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | ExpertiseId | Id | Int | PK |
-| Description | | String | |
+| description | | String | |
 
-### SKILLSET
-
+### Skillset
+-- Out of POC
 Contains Skill set descriptions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- | -------------- | ------ | --- |
 | SkillSetId | Id | Int | PK |
-| Description | | String | |
-### Permissions
+| description | | String | |
 
-#### User
+## Permissions
+
+### User
 
 Contains the user with access permissions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- | ------ |-- |
-| UserId | Id | | PK |
+| user_id | Id | | PK |
 | Active | Is user active | Bool | |
 
-#### Role
+### Role
 
 Contains the different roles
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- |------ | -- |
-| RoleId | Id | | PK |
-| Name | Description | String | |
+| role_id | Id | | PK |
+| Name | description | String | |
 
-#### User_Role
+### User_Role
 
 Contains the relationship between user & roles
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- |------ | -- |
-| UserId | Id | | PK, FK |
-| RoleId | Id | | PK, FK |
+| user_id | Id | | PK, FK |
+| role_id | Id | | PK, FK |
 
-#### Permission
-
+### Permission
+--Managed through Hasura in the POC
 Contains the different permissions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- |------ | -- |
 | PermissionId | Id | | PK |
-| Name | Description | String | |
+| Name | description | String | |
 | Query | Filter to apply to the person | code to execute dynamically|
 
-#### Role_Permission
-
+### Role_Permission
+--Managed through Hasura in the POC
 Contains the relationship between role & permissions
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- |------ | -- |
 | PermissionId | Id | | PK |
-| RoleId | Id | | PK |
+| role_id | Id | | PK |
 
-#### GroupFields
-
+### GroupFields
+--Managed through Hasura in the POC
 Set of fields
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- |------ | -- |
 | GroupFieldsId | Id | | PK |
-| Name | Description | String | |
+| Name | description | String | |
 
-#### Permission_GroupFields
-
+### Permission_GroupFields
+--Managed through Hasura in the POC
 Fields accessible by the permission
-| Field | Description | Type | Notes |
+| Field | description | Type | Notes |
 | ------- |-------------- |------ | -- |
 | PermissionId | Id | | PK, FK |
 | GroupFieldsId | Id | | PK, FK |
 
-## Doubts
-
-- Makes it sense to unify Message and feedback in one table (with some boolean to differentiate one from another)
-
 ## Next steps
 
-- Create db
+- Deploy DB in the cloud for POC
 - Create small dataset
 - begin with Hasura
 - Create POC
+- Unify Message and feedback in one table (with some boolean to differentiate one from another)
