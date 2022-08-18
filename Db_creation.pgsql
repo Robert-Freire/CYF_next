@@ -19,35 +19,30 @@ CREATE TABLE IF NOT EXISTS public.user
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.user
-    OWNER to postgres;
 
 -- Table: public.Region
 CREATE TABLE IF NOT EXISTS public.region
 (
     region_id int GENERATED ALWAYS AS IDENTITY,
-    description VARCHAR(250),
+    description text,
     CONSTRAINT region_pkey PRIMARY KEY (region_id)
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.region
-    OWNER to postgres;
 
 -- Table: public.Person
 CREATE TABLE IF NOT EXISTS public.person
 (
   person_id int GENERATED ALWAYS AS IDENTITY,
   user_id int,
-  description VARCHAR(250),
-  first_name  VARCHAR(250),
-  last_name VARCHAR(250),
-  email  VARCHAR(250),
-  telephone  VARCHAR(250),
+  first_name  text,
+  last_name text,
+  email  text,
+  telephone  text,
   agree_to_tou BOOLEAN,
   agree_to_receive_communication BOOLEAN,
   region_id int,
-  created_at timestamp,
+  created_at timestamp NOT NULL DEFAULT NOW(),
   updated_at timestamp,
   updated_by int,
   CONSTRAINT person_pkey PRIMARY KEY (person_id),
@@ -57,8 +52,6 @@ CREATE TABLE IF NOT EXISTS public.person
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.person
-    OWNER to postgres;
 
 
 -- Table: public.student
@@ -69,8 +62,8 @@ CREATE TABLE IF NOT EXISTS public.student
   has_it_access boolean,
   is_eighteen boolean, 
   has_disadvantaged_background boolean,
-  disadvantaged_background_text varchar(5000),
-  created_at timestamp,
+  disadvantaged_background_text text,
+  created_at timestamp NOT NULL DEFAULT NOW(),
   updated_at timestamp,
   updated_by int,
   CONSTRAINT student_pkey PRIMARY KEY (student_id),
@@ -79,8 +72,6 @@ CREATE TABLE IF NOT EXISTS public.student
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.student
-    OWNER to postgres;
 
 
 -- Table: public.cohort
@@ -88,11 +79,10 @@ CREATE TABLE IF NOT EXISTS public.cohort
 (
   cohort_id int GENERATED ALWAYS AS IDENTITY,
   region_id int,
-  description varchar(250),
+  description text,
   start_date date, 
   end_date date,
-  disadvantaged_background_text varchar(5000),
-  created_at timestamp,
+  created_at timestamp NOT NULL DEFAULT NOW(),
   updated_at timestamp,
   updated_by int,
   CONSTRAINT cohort_pkey PRIMARY KEY (cohort_id),
@@ -101,8 +91,6 @@ CREATE TABLE IF NOT EXISTS public.cohort
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.cohort
-    OWNER to postgres;
 
 -- Table: public.student_cohort
 CREATE TABLE IF NOT EXISTS public.student_cohort
@@ -116,19 +104,17 @@ CREATE TABLE IF NOT EXISTS public.student_cohort
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.student_cohort
-    OWNER to postgres;
 
 -- Table: public.volunteer
 CREATE TABLE IF NOT EXISTS public.volunteer
 (
   volunteer_id int GENERATED ALWAYS AS IDENTITY,
   person_id int,
-  other_expertise varchar(250),
+  other_expertise text,
   is_currently_volunteering boolean, 
   has_disadvantaged_background boolean,
-  is_available_on_weekends varchar(5000),
-  created_at timestamp,
+  is_available_on_weekends text,
+  created_at timestamp NOT NULL DEFAULT NOW(),
   updated_at timestamp,
   updated_by int,
   CONSTRAINT volunteer_pkey PRIMARY KEY (volunteer_id),
@@ -137,20 +123,16 @@ CREATE TABLE IF NOT EXISTS public.volunteer
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.student
-    OWNER to postgres;
 
 -- Table: public.buddy_type
 CREATE TABLE IF NOT EXISTS public.buddy_type
 (
   buddy_type_id int GENERATED ALWAYS AS IDENTITY,
-  description varchar(250),
+  description text,
   CONSTRAINT buddy_type_pkey PRIMARY KEY (buddy_type_id)
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.buddy_type
-    OWNER to postgres;
 
 -- Table: public.buddy
 CREATE TABLE IF NOT EXISTS public.buddy
@@ -165,20 +147,16 @@ CREATE TABLE IF NOT EXISTS public.buddy
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.buddy
-    OWNER to postgres;
 
 -- Table: public.role
 CREATE TABLE IF NOT EXISTS public.role
 (
   role_id int GENERATED ALWAYS AS IDENTITY,
-  name varchar(250),
+  name text,
   CONSTRAINT role_pkey PRIMARY KEY (role_id)
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.role
-    OWNER to postgres;
 
 -- Table: public.volunteer_role_cohort
 CREATE TABLE IF NOT EXISTS public.volunteer_role_cohort
@@ -195,8 +173,6 @@ CREATE TABLE IF NOT EXISTS public.volunteer_role_cohort
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.volunteer_role_cohort
-    OWNER to postgres;
 
 -- Table: public.user_role
 CREATE TABLE IF NOT EXISTS public.user_role
@@ -209,5 +185,3 @@ CREATE TABLE IF NOT EXISTS public.user_role
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.user_role
-    OWNER to postgres;

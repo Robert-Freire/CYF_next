@@ -430,8 +430,6 @@ Fields accessible by the permission
 
 ## Next steps
 
-- Deploy DB in the cloud for POC
-- Create small dataset
-- begin with Hasura
-- Create POC
+- Deploy DB in the cloud for POC (https://devcenter.heroku.com/categories/command-line)
+- Filter first scenario in Hasura
 - Unify Message and feedback in one table (with some boolean to differentiate one from another)
