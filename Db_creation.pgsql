@@ -185,3 +185,13 @@ CREATE TABLE IF NOT EXISTS public.user_role
 )
 TABLESPACE pg_default;
 
+-- View to filter access to students
+DROP VIEW IF EXISTS FILTERED_STUDENTS;
+
+CREATE VIEW FILTERED_STUDENTS AS
+SELECT  b.volunteer_id, s.student_id, s.person_id, p.first_name, p.last_name, p.email, p.telephone, 
+        p.agree_to_tou, p.agree_to_receive_communication, p.region_id,  s.has_it_access, s.is_eighteen, 
+        s.has_disadvantaged_background, s.disadvantaged_background_text
+FROM student s 
+INNER JOIN buddy b ON s.student_id = b.student_id
+INNER JOIN person p ON s.person_id = p.person_id;
