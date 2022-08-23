@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS public.student
   is_eighteen boolean, 
   has_disadvantaged_background boolean,
   disadvantaged_background_text text,
+  call boolean,
   created_at timestamp NOT NULL DEFAULT NOW(),
   updated_at timestamp,
   updated_by int,
@@ -184,6 +185,7 @@ CREATE TABLE IF NOT EXISTS public.user_role
   CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role_id)
 )
 TABLESPACE pg_default;
+
 
 -- View to filter access to students
 DROP VIEW IF EXISTS FILTERED_STUDENTS;

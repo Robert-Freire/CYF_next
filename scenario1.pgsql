@@ -1,22 +1,29 @@
 -- Scenario 1 - Tech Buddy must see only their buddies
 /*
-volunteers
-Chis
-Sasha
-Ezra
+Volunteers
+    Chis
+    Sasha
+    Ezra
 
-students
-Alex
-Tailor
-Robin
-Kennedy
-Akia
+Students
+    Alex
+    Tailor
+    Robin
+    Kennedy
+    Akia
+
+buddies and his trainees
+    Cris	Alex
+    Cris	Taylor
+    Cris	Robin
+    Sasha	Kennedy
+    Sasha	Akia
 
 Region 
-West Midlands
+    West Midlands
 
 Cohort
-WM4
+    WM4
 */
 
 
@@ -138,5 +145,6 @@ BEGIN
     INSERT INTO BUDDY (volunteer_id, student_id, buddy_type_id) VALUES (chrisVolunteerId, teshiStudentId, pdBuddyId);
 
 END$$
+
 
 
