@@ -67,12 +67,19 @@ BEGIN
     DELETE FROM BUDDY;
     DELETE FROM STUDENT_COHORT;
     DELETE FROM STUDENT;
+    PERFORM  setval(pg_get_serial_sequence('student', 'student_id'), 1);
     DELETE FROM VOLUNTEER;
+    PERFORM  setval(pg_get_serial_sequence('volunteer', 'volunteer_id'),1);
     DELETE FROM PERSON;
+    PERFORM  setval(pg_get_serial_sequence('person', 'person_id'), 1);
     DELETE FROM public.user;
+    PERFORM  setval(pg_get_serial_sequence('user', 'user_id'), 1);
     DELETE FROM BUDDY_TYPE;
+    PERFORM  setval(pg_get_serial_sequence('buddy_type', 'buddy_type_id'), 1);
     DELETE FROM COHORT;
+    PERFORM  setval(pg_get_serial_sequence('cohort', 'cohort_id'), 1);
     DELETE FROM REGION;
+    PERFORM  setval(pg_get_serial_sequence('region', 'region_id'), 1);
 
     INSERT INTO region (description) VALUES ('West Midlands') RETURNING region_id INTO westMidlandsId;
     INSERT INTO cohort (region_id, description) VALUES (westMidlandsId, 'WM4') RETURNING cohort_id INTO wm4id;
@@ -96,7 +103,7 @@ BEGIN
 
     -- Ezra
     INSERT INTO public.user (active) VALUES (true) RETURNING user_id INTO ezraUserId;
-    INSERT INTO person(user_id, first_name, region_id) VALUES (ezraUserId, 'Sasha', westMidlandsId) RETURNING person_id INTO ezraPersonId;
+    INSERT INTO person(user_id, first_name, region_id) VALUES (ezraUserId, 'Ezra', westMidlandsId) RETURNING person_id INTO ezraPersonId;
     INSERT INTO volunteer(person_id) VALUES (ezraPersonId) RETURNING volunteer_id INTO ezraVolunteerId;
 
     -- STUDENTS 
@@ -142,7 +149,7 @@ BEGIN
     INSERT INTO BUDDY (volunteer_id, student_id, buddy_type_id) VALUES (chrisVolunteerId, robinStudentId, pdBuddyId);
     INSERT INTO BUDDY (volunteer_id, student_id, buddy_type_id)VALUES (sashaVolunteerId, kennedyStudentId, techBuddyId);
     INSERT INTO BUDDY (volunteer_id, student_id, buddy_type_id) VALUES (sashaVolunteerId, akiaStudentId, techBuddyId);
-    INSERT INTO BUDDY (volunteer_id, student_id, buddy_type_id) VALUES (chrisVolunteerId, teshiStudentId, pdBuddyId);
+    INSERT INTO BUDDY (volunteer_id, student_id, buddy_type_id) VALUES (ezraVolunteerId, teshiStudentId, pdBuddyId);
 
 END$$
 

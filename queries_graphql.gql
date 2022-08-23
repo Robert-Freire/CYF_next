@@ -1,0 +1,37 @@
+
+query Volunteers_admin {
+  volunteer {
+    volunteer_id
+    person {
+      first_name
+      last_name
+      user_id
+    }
+  }
+}
+
+query Students_admin {
+  student {
+    person {
+      first_name
+      last_name
+    }
+    student_id
+    student_cohorts {
+      cohort {
+        description
+      }
+    }
+  }
+}
+
+
+query Students_user {
+  student {
+    person {
+      first_name
+      last_name
+    }
+    student_id
+  }
+}

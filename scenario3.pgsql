@@ -1,5 +1,5 @@
 -- Scenario 3: We have a new volunteer (John) in london (it is neither a buddy nor a TA)
-
+/*
 John is a new volunteer in London
 
 New Trainees in London
@@ -12,7 +12,7 @@ Kyle
 Logan
 Marion
 Ryan
-
+*/
 DO $$
 
 DECLARE 

@@ -188,12 +188,42 @@ TABLESPACE pg_default;
 
 
 -- View to filter access to students
-DROP VIEW IF EXISTS FILTERED_STUDENTS;
 
-CREATE VIEW FILTERED_STUDENTS AS
-SELECT  b.volunteer_id, s.student_id, s.person_id, p.first_name, p.last_name, p.email, p.telephone, 
-        p.agree_to_tou, p.agree_to_receive_communication, p.region_id,  s.has_it_access, s.is_eighteen, 
-        s.has_disadvantaged_background, s.disadvantaged_background_text
-FROM student s 
-INNER JOIN buddy b ON s.student_id = b.student_id
-INNER JOIN person p ON s.person_id = p.person_id;
+
+DROP VIEW IF EXISTS USER_ACCESS_STUDENT;
+
+CREATE VIEW USER_ACCESS_STUDENT AS 
+SELECT DISTINCT user_id, student_id
+FROM (
+  SELECT vp.user_id, b.student_id
+  FROM buddy b 
+  INNER JOIN volunteer v ON b.volunteer_id = v.volunteer_id
+  INNER JOIN person vp ON vp.person_id = v.Person_id 
+UNION     
+  SELECT  vp.user_id, sc.student_id
+  FROM student_cohort sc
+  INNER JOIN volunteer_role_cohort vc ON sc.cohort_id = vc.cohort_id
+  INNER JOIN volunteer v ON vc.volunteer_id = v.volunteer_id
+  INNER JOIN person vp ON vp.person_id = v.Person_id
+) uas 
+
+-- View to filter access to persons
+
+DROP VIEW IF EXISTS USER_ACCESS_PERSON;
+
+CREATE VIEW USER_ACCESS_PERSON AS 
+SELECT DISTINCT user_id, person_id
+FROM (
+  SELECT vp.user_id, s.person_id
+  FROM buddy b 
+  INNER JOIN volunteer v ON b.volunteer_id = v.volunteer_id
+  INNER JOIN person vp ON vp.person_id = v.Person_id 
+  INNER JOIN student s ON s.student_id = b.student_id
+UNION     
+  SELECT  vp.user_id, s.person_id
+  FROM student_cohort sc
+  INNER JOIN volunteer_role_cohort vc ON sc.cohort_id = vc.cohort_id
+  INNER JOIN volunteer v ON vc.volunteer_id = v.volunteer_id
+  INNER JOIN person vp ON vp.person_id = v.Person_id
+  INNER JOIN student s ON s.student_id = sc.student_id
+) uas 
