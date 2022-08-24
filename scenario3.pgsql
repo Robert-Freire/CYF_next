@@ -16,14 +16,14 @@ Ryan
 DO $$
 
 DECLARE 
-    johnUserId     int;
-    johnPersonId   int;
-    johnVolunteerId int;
-    londonId        int;
+    johnUserId     int = 11;
+    johnPersonId   int = 11;
+    johnVolunteerId int = 5;
+    londonId        int = 3;
 
-    blakeUserId     int;
-    blakePersonId   int;
-    blakeStudentId  int;
+    blakeUserId     int =12;
+    blakePersonId   int =12;
+    blakeStudentId  int = 8;
 
     BrooklynUserId     int;
     BrooklynPersonId   int;
@@ -58,17 +58,25 @@ DECLARE
     ryanStudentId  int;
 BEGIN
 
+    DELETE FROM VOLUNTEER WHERE volunteer_id >= johnVolunteerId;
+    PERFORM  setval(pg_get_serial_sequence('volunteer', 'volunteer_id'),johnVolunteerId - 1);
+    DELETE FROM STUDENT WHERE student_id >= blakeStudentId;
+    PERFORM  setval(pg_get_serial_sequence('person', 'person_id'), blakeStudentId - 1);
+    DELETE FROM PERSON WHERE person_id >= blakePersonId;
+    PERFORM  setval(pg_get_serial_sequence('person', 'person_id'), blakePersonId - 1);
+    DELETE FROM public.user WHERE user_id >= blakeUserId;
+    PERFORM  setval(pg_get_serial_sequfence('user', 'user_id'), blakeUserId -1);
+
     -- VOLUNTEERS 
     -- John  
     INSERT INTO public.user (active) VALUES (true) RETURNING user_id INTO johnUserId;
-    INSERT INTO person(user_id, first_name, region_id) VALUES (johnUserId, 'John', westMidlandsId) RETURNING person_id INTO johnPersonId;
+    INSERT INTO person(user_id, first_name, region_id) VALUES (johnUserId, 'John', londonId) RETURNING person_id INTO johnPersonId;
     INSERT INTO volunteer(person_id) VALUES (johnPersonId) RETURNING volunteer_id INTO johnVolunteerId;
-
 
     -- STUDENTS 
     -- Blake
     INSERT INTO public.user (active) VALUES (true) RETURNING user_id INTO blakeUserId;
-    INSERT INTO person (user_id, first_name, region_id) VALUES (blakeUserId, 'Blake', londonId) RETURNING person_id INTO blakePersonId;
+    INSERT INTO person (user_id, first_name, region_id, telephone, email) VALUES (blakeUserId, 'Blake', londonId, '555', 'a@a.com') RETURNING person_id INTO blakePersonId;
     INSERT INTO student (person_id, call) VALUES (blakePersonId, true) RETURNING student_id INTO blakeStudentId;
 
     -- Brooklyn 
@@ -110,4 +118,5 @@ BEGIN
     INSERT INTO public.user (active) VALUES (true) RETURNING user_id INTO ryanUserId;
     INSERT INTO person (user_id, first_name, region_id) VALUES (emersonUserId, 'Ryan', londonId) RETURNING person_id INTO ryanPersonId;
     INSERT INTO student (person_id, call) VALUES (ryanPersonId, false) RETURNING student_id INTO ryanStudentId;    
-END
+    
+END$$

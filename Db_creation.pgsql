@@ -227,3 +227,15 @@ UNION
   INNER JOIN person vp ON vp.person_id = v.Person_id
   INNER JOIN student s ON s.student_id = sc.student_id
 ) uas 
+
+
+-- View to filter access to students l2
+DROP VIEW IF EXISTS USER_L2_ACCESS_STUDENT;
+
+CREATE VIEW USER_L2_ACCESS_STUDENT AS 
+SELECT vp.user_id, s.student_id, s.person_id
+FROM student s 
+INNER JOIN person sp ON sp.person_id = s.person_id
+INNER JOIN person vp ON vp.region_id = sp.region_id 
+INNER JOIN volunteer v ON vp.person_id = v.person_id
+

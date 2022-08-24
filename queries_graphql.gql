@@ -25,7 +25,6 @@ query Students_admin {
   }
 }
 
-
 query Students_user {
   student {
     person {
@@ -35,3 +34,17 @@ query Students_user {
     student_id
   }
 }
+
+query Students_user_l2 {
+  student {
+    person {
+      first_name
+      last_name
+      email
+      telephone
+    }
+    student_id
+    call
+  }
+}
+
