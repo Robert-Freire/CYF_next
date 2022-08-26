@@ -66,6 +66,8 @@ DECLARE
 BEGIN
     DELETE FROM BUDDY;
     DELETE FROM STUDENT_COHORT;
+    DELETE FROM volunteer_role_cohort;
+    DELETE FROM role;    
     DELETE FROM STUDENT;
     PERFORM  setval(pg_get_serial_sequence('student', 'student_id'), 1);
     DELETE FROM VOLUNTEER;
@@ -140,7 +142,7 @@ BEGIN
     -- Teshi
     INSERT INTO public.user (active) VALUES (true) RETURNING user_id INTO teshiUserId;
     INSERT INTO person(user_id, first_name, region_id) VALUES (teshiUserId, 'Teshi', westMidlandsId) RETURNING person_id INTO teshiPersonId;
-    INSERT INTO student(person_id) VALUES (akiaPersonId) RETURNING student_id INTO teshiStudentId;
+    INSERT INTO student(person_id) VALUES (teshiPersonId) RETURNING student_id INTO teshiStudentId;
     INSERT INTO student_cohort(student_id, cohort_id, is_active) VALUES (teshiStudentId, ldn8Id, TRUE);
 
     -- BUDDIES

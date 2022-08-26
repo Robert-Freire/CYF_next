@@ -1,0 +1,66 @@
+table:
+  name: person
+  schema: public
+array_relationships:
+  - name: students
+    using:
+      foreign_key_constraint_on:
+        column: person_id
+        table:
+          name: student
+          schema: public
+  - name: users_with_access
+    using:
+      manual_configuration:
+        column_mapping:
+          person_id: person_id
+        insertion_order: null
+        remote_table:
+          name: user_access_person
+          schema: public
+  - name: users_with_access_l2
+    using:
+      manual_configuration:
+        column_mapping:
+          person_id: person_id
+        insertion_order: null
+        remote_table:
+          name: user_l2_access_student
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - agree_to_receive_communication
+        - agree_to_tou
+        - created_at
+        - first_name
+        - last_name
+        - person_id
+        - region_id
+        - updated_at
+        - updated_by
+        - user_id
+      filter:
+        users_with_access:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: user_l2
+    permission:
+      columns:
+        - agree_to_receive_communication
+        - agree_to_tou
+        - person_id
+        - region_id
+        - updated_by
+        - user_id
+        - email
+        - first_name
+        - last_name
+        - telephone
+        - created_at
+        - updated_at
+      filter:
+        users_with_access_l2:
+          user_id:
+            _eq: X-Hasura-User-Id

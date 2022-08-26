@@ -61,11 +61,11 @@ BEGIN
     DELETE FROM VOLUNTEER WHERE volunteer_id >= johnVolunteerId;
     PERFORM  setval(pg_get_serial_sequence('volunteer', 'volunteer_id'),johnVolunteerId - 1);
     DELETE FROM STUDENT WHERE student_id >= blakeStudentId;
-    PERFORM  setval(pg_get_serial_sequence('person', 'person_id'), blakeStudentId - 1);
+    PERFORM  setval(pg_get_serial_sequence('student', 'student_id'), blakeStudentId - 1);
     DELETE FROM PERSON WHERE person_id >= blakePersonId;
     PERFORM  setval(pg_get_serial_sequence('person', 'person_id'), blakePersonId - 1);
     DELETE FROM public.user WHERE user_id >= blakeUserId;
-    PERFORM  setval(pg_get_serial_sequfence('user', 'user_id'), blakeUserId -1);
+    PERFORM  setval(pg_get_serial_sequence('user', 'user_id'), blakeUserId -1);
 
     -- VOLUNTEERS 
     -- John  

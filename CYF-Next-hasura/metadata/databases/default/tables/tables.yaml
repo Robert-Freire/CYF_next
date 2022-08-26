@@ -1,0 +1,8 @@
+- "!include public_cohort.yaml"
+- "!include public_person.yaml"
+- "!include public_student.yaml"
+- "!include public_student_cohort.yaml"
+- "!include public_user_access_person.yaml"
+- "!include public_user_access_student.yaml"
+- "!include public_user_l2_access_student.yaml"
+- "!include public_volunteer.yaml"

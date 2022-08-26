@@ -1,0 +1,67 @@
+table:
+  name: student
+  schema: public
+object_relationships:
+  - name: person
+    using:
+      foreign_key_constraint_on: person_id
+array_relationships:
+  - name: Users_with_access
+    using:
+      manual_configuration:
+        column_mapping:
+          student_id: student_id
+        insertion_order: null
+        remote_table:
+          name: user_access_student
+          schema: public
+  - name: Users_with_access_l2
+    using:
+      manual_configuration:
+        column_mapping:
+          student_id: student_id
+        insertion_order: null
+        remote_table:
+          name: user_l2_access_student
+          schema: public
+  - name: student_cohorts
+    using:
+      foreign_key_constraint_on:
+        column: student_id
+        table:
+          name: student_cohort
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - student_id
+        - person_id
+        - has_it_access
+        - is_eighteen
+        - has_disadvantaged_background
+        - disadvantaged_background_text
+        - created_at
+        - updated_at
+        - updated_by
+      filter:
+        Users_with_access:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: user_l2
+    permission:
+      columns:
+        - call
+        - created_at
+        - disadvantaged_background_text
+        - has_disadvantaged_background
+        - has_it_access
+        - is_eighteen
+        - person_id
+        - student_id
+        - updated_at
+        - updated_by
+      filter:
+        Users_with_access_l2:
+          user_id:
+            _eq: X-Hasura-User-Id

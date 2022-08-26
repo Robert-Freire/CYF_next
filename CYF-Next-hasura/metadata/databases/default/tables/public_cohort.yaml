@@ -1,0 +1,11 @@
+table:
+  name: cohort
+  schema: public
+array_relationships:
+  - name: student_cohorts
+    using:
+      foreign_key_constraint_on:
+        column: cohort_id
+        table:
+          name: student_cohort
+          schema: public

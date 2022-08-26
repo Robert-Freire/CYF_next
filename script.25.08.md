@@ -8,7 +8,7 @@
     First we can look how can looks like a basic future architecture and how this can work
     https://lucid.app/lucidchart/e359e076-008b-4c71-b67d-542b1c04475b/view?page=0_0&invitationId=inv_d4b97a82-a64d-4e58-829d-9966d90af664#
 
-     It's important here to note the authentication and authorizations components. Now the current application contains a authentication module but not a athorithation. Before advancing more in the POC and to understand better what we will see we can make sure that we are on the same page when we are talking  authentication and which providers can be used and authorization
+     It's important here to note the authentication and authorizations components. Now the current application contains a authentication module but not a authorization. Before advancing more in the POC and to understand better what we will see we can make sure that we are on the same page when we are talking  authentication and which providers can be used and authorization
 
 ## POC
 
@@ -29,6 +29,7 @@
         1. This new query cannot be used with a user with l1
 
 ## Problems
+
     * With the current implementation is a user can access some column, then can access this columns for all the users
 
     * To allow to have different columns accessible (and updatable) for different rows I need to implement different tables (students_level_1, students_level2) amd manga permission to access each of the table. This also makes the code more complicated. 
